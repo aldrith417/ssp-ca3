@@ -9,18 +9,24 @@ import { SaveReqOrder, UpdateReqOrder, GetOrder,DeleteOrder, OrderListReqOrder }
 //@Route("secure")
 export class OrderController {
   constructor() { }
+
+  // route to check any particular order
   @Post("/getOrder")
   async getOrder(@Body() getreq:GetOrder): Promise<SaveUpdateResOrder> {
     const order = await new MainOrder().getOrder(getreq.id);
     if (order === null) throw new CustomeError(404, 'Sorry your order  is not found');
     return <SaveUpdateResOrder>order;
   }
+
+  // route to take any order
   @Post('/saveOrder')
   async saveOrder(@Body() order: SaveReqOrder): Promise<SaveUpdateResOrder> {
     const new_order:IORDER = await new MainOrder().saveOrder(<IORDER>(order));
     return <SaveUpdateResOrder>(new_order);
   }
   @Security("jwt", ["admin"])
+
+  // route to update any order 
   @Put('/updateOrder')
   async updateOrder(@Body() order: UpdateReqOrder): Promise<SaveUpdateResOrder> {
     const update_order= await new MainOrder().updateOrder(<IORDER>(order));
@@ -28,11 +34,14 @@ export class OrderController {
       throw new CustomeError(400, 'Sorry the order you want to edit is not updating.');
     return <SaveUpdateResOrder>update_order;
   }
+
+  // route to delete any order
   @Delete('/deleteorder')
   @SuccessResponse("200","Order deleted")
   async deleteOrder(@Body() delreq: DeleteOrder) {
     return await new MainOrder().deleteOrder(delreq.id);
   }
+  // route to get all the order in the queue.
   @Get('/getOrderList')
   async getOrderList(): Promise<OrderListReqOrder[]> {
     const order: IORDER[] = await new MainOrder().getOrderlist();
