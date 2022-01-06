@@ -8,6 +8,6 @@ const IPRODUCTSchema = new Schema(
     price: { type: Number },
    
   },
-  //{ timestamps: true }
+  { timestamps: true }
 );
 export const PRODUCTSchema = model<IPRODUCT>('IPRODUCTSchema', IPRODUCTSchema);
