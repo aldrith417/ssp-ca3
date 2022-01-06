@@ -1,3 +1,4 @@
+// Request for all routes will look like these
 export interface SaveReqOrder{
     noOfOrder: number;
     productId: string;

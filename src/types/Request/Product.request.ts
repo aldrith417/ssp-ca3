@@ -1,3 +1,5 @@
+
+// Request for all routes will look like these
 export interface SaveReqProduct{
     Name: string;
     Description: string;
