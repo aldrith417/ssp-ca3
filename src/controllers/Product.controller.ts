@@ -8,17 +8,22 @@ import { SaveReqProduct, UpdateReqProduct, GetProduct,DeleteProduct, ProductList
 @Tags('product')
 export class ProductController {
   constructor() { }
+
+  // route to get any particular pizza
   @Post("/getProduct")
   async getProduct(@Body() getreq:GetProduct): Promise<SaveUpdateResProduct> {
     const product = await new MainProduct().getProduct(getreq.id);
     if (product === null) throw new CustomeError(404, 'Product is not found');
     return <SaveUpdateResProduct>product;
   }
+  // route to save any particular pizza
   @Post('/saveproduct')
   async saveProduct(@Body() product: SaveReqProduct): Promise<SaveUpdateResProduct> {
     const new_product:IPRODUCT = await new MainProduct().saveProduct(<IPRODUCT>(product));
     return <SaveUpdateResProduct>(new_product);
   }
+
+  // route to update any information about pizza
   @Put('/updateproduct')
   async updateProduct(@Body() product: UpdateReqProduct): Promise<SaveUpdateResProduct> {
     const update_product= await new MainProduct().updateProduct(<IPRODUCT>(product));
@@ -26,11 +31,15 @@ export class ProductController {
       throw new CustomeError(400, 'Product is not updated');
     return <SaveUpdateResProduct>update_product;
   }
+
+  // route to delete any pizza
   @Delete('/deleteproduct')
   @SuccessResponse("200","Product deleted")
   async deleteProduct(@Body() delreq: DeleteProduct) {
     return await new MainProduct().deleteProduct(delreq.id);
   }
+
+  // route to get all the pizzaz in the queue.
   @Get('/getproductlist')
   async getProductList(): Promise<ProductListReqProduct[]> {
     const product: IPRODUCT[] = await new MainProduct().getProductlist();
