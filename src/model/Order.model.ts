@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { IORDER } from '../types/document/IOrder';
+// Schema of Pizza, its showing which parameters are required and which are optional
 const IORDERSchema = new Schema(
   {
     noOfOrder: { 
